@@ -1,0 +1,41 @@
+# Environment variables
+.env
+.env.local
+.env.*.local
+.env.backup
+.env.*.backup
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Dependencies
+vendor/
+node_modules/
+composer.lock
+package-lock.json
+yarn.lock
+
+# Laravel
+bootstrap/cache/
+storage/app/
+storage/framework/
+storage/logs/
+.cache/
+
+# Logs
+*.log
+
+# OS
+Thumbs.db
+
+# Testing
+.phpunit.result.cache
+coverage/
+
+# Build artifacts
+mix-manifest.json
