@@ -1,0 +1,189 @@
+[12-May-2025 14:35:59 UTC] PHP Fatal error:  Uncaught ErrorException: Undefined variable $settings in /home/cuanmudah/public_html/storage/framework/views/a24949469804eb21854a4fc13336434d8f59cebb.php:9
+Stack trace:
+#0 /home/cuanmudah/public_html/storage/framework/views/a24949469804eb21854a4fc13336434d8f59cebb.php(9): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(2, 'Undefined varia...', '/home/cuanmudah...', 9)
+#1 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(107): require('/home/cuanmudah...')
+#2 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(108): Illuminate\Filesystem\Filesystem::Illuminate\Filesystem\{closure}()
+#3 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(58): Illuminate\Filesystem\Filesystem->getRequire('/home/cuanmudah...', Array)
+#4 /home/cuanmudah/public_html/vendor/livewire/livewire/src/ComponentConcerns/RendersLivewireComponents.php(69): Illuminate\View\Engines\PhpEngine->evaluatePath('/home/cuanmudah...', Array)
+#5 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(61): Livewire\CompilerEngineForIgnition->evaluatePath('/home/cuanmudah...', Array)
+#6 /home/cuanmudah/public_html/vendor/facade/ignition/src/Views/Engines/CompilerEngine.php(37): Illuminate\View\Engines\CompilerEngine->get('/home/cuanmudah...', Array)
+#7 /home/cuanmudah/public_html/vendor/livewire/livewire/src/ComponentConcerns/RendersLivewireComponents.php(35): Facade\Ignition\Views\Engines\CompilerEngine->get('/home/cuanmudah...', Array)
+#8 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/View.php(139): Livewire\CompilerEngineForIgnition->get('/home/cuanmudah...', Array)
+#9 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/View.php(122): Illuminate\View\View->getContents()
+#10 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/View.php(91): Illuminate\View\View->renderContents()
+#11 /home/cuanmudah/public_html/storage/framework/views/bacfcfc94b588d1e3e7cd13e63f9c851ed1d85d8.php(5): Illuminate\View\View->render()
+#12 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(107): require('/home/cuanmudah...')
+#13 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(108): Illuminate\Filesystem\Filesystem::Illuminate\Filesystem\{closure}()
+#14 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(58): Illuminate\Filesystem\Filesystem->getRequire('/home/cuanmudah...', Array)
+#15 /home/cuanmudah/public_html/vendor/livewire/livewire/src/ComponentConcerns/RendersLivewireComponents.php(69): Illuminate\View\Engines\PhpEngine->evaluatePath('/home/cuanmudah...', Array)
+#16 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(61): Livewire\CompilerEngineForIgnition->evaluatePath('/home/cuanmudah...', Array)
+#17 /home/cuanmudah/public_html/vendor/facade/ignition/src/Views/Engines/CompilerEngine.php(37): Illuminate\View\Engines\CompilerEngine->get('/home/cuanmudah...', Array)
+#18 /home/cuanmudah/public_html/vendor/livewire/livewire/src/ComponentConcerns/RendersLivewireComponents.php(35): Facade\Ignition\Views\Engines\CompilerEngine->get('/home/cuanmudah...', Array)
+#19 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/View.php(139): Livewire\CompilerEngineForIgnition->get('/home/cuanmudah...', Array)
+#20 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/View.php(122): Illuminate\View\View->getContents()
+#21 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/View.php(91): Illuminate\View\View->renderContents()
+#22 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Http/Response.php(69): Illuminate\View\View->render()
+#23 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Http/Response.php(35): Illuminate\Http\Response->setContent(Object(Illuminate\View\View))
+#24 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(55): Illuminate\Http\Response->__construct(Object(Illuminate\View\View), 500, Array)
+#25 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(85): Illuminate\Routing\ResponseFactory->make(Object(Illuminate\View\View), 500, Array)
+#26 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(585): Illuminate\Routing\ResponseFactory->view('errors::500', Array, 500, Array)
+#27 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(490): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#28 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(356): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#29 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Facade\Ignition\Exceptions\ViewException))
+#30 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(173): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Facade\Ignition\Exceptions\ViewException))
+#31 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Facade\Ignition\Exceptions\ViewException))
+#32 {main}
+
+Next Facade\Ignition\Exceptions\ViewException: Undefined variable $settings (View: /home/cuanmudah/public_html/resources/views/errors/minimal.blade.php) in /home/cuanmudah/public_html/resources/views/errors/minimal.blade.php:9
+Stack trace:
+#0 /home/cuanmudah/public_html/resources/views/errors/minimal.blade.php(9): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(2, 'Undefined varia...', '/home/cuanmudah...', 9)
+#1 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(107): require('/home/cuanmudah...')
+#2 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(108): Illuminate\Filesystem\Filesystem::Illuminate\Filesystem\{closure}()
+#3 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(58): Illuminate\Filesystem\Filesystem->getRequire('/home/cuanmudah...', Array)
+#4 /home/cuanmudah/public_html/vendor/livewire/livewire/src/ComponentConcerns/RendersLivewireComponents.php(69): Illuminate\View\Engines\PhpEngine->evaluatePath('/home/cuanmudah...', Array)
+#5 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(61): Livewire\CompilerEngineForIgnition->evaluatePath('/home/cuanmudah...', Array)
+#6 /home/cuanmudah/public_html/vendor/facade/ignition/src/Views/Engines/CompilerEngine.php(37): Illuminate\View\Engines\CompilerEngine->get('/home/cuanmudah...', Array)
+#7 /home/cuanmudah/public_html/vendor/livewire/livewire/src/ComponentConcerns/RendersLivewireComponents.php(35): Facade\Ignition\Views\Engines\CompilerEngine->get('/home/cuanmudah...', Array)
+#8 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/View.php(139): Livewire\CompilerEngineForIgnition->get('/home/cuanmudah...', Array)
+#9 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/View.php(122): Illuminate\View\View->getContents()
+#10 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/View.php(91): Illuminate\View\View->renderContents()
+#11 /home/cuanmudah/public_html/resources/views/errors/500.blade.php(5): Illuminate\View\View->render()
+#12 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(107): require('/home/cuanmudah...')
+#13 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(108): Illuminate\Filesystem\Filesystem::Illuminate\Filesystem\{closure}()
+#14 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(58): Illuminate\Filesystem\Filesystem->getRequire('/home/cuanmudah...', Array)
+#15 /home/cuanmudah/public_html/vendor/livewire/livewire/src/ComponentConcerns/RendersLivewireComponents.php(69): Illuminate\View\Engines\PhpEngine->evaluatePath('/home/cuanmudah...', Array)
+#16 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(61): Livewire\CompilerEngineForIgnition->evaluatePath('/home/cuanmudah...', Array)
+#17 /home/cuanmudah/public_html/vendor/facade/ignition/src/Views/Engines/CompilerEngine.php(37): Illuminate\View\Engines\CompilerEngine->get('/home/cuanmudah...', Array)
+#18 /home/cuanmudah/public_html/vendor/livewire/livewire/src/ComponentConcerns/RendersLivewireComponents.php(35): Facade\Ignition\Views\Engines\CompilerEngine->get('/home/cuanmudah...', Array)
+#19 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/View.php(139): Livewire\CompilerEngineForIgnition->get('/home/cuanmudah...', Array)
+#20 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/View.php(122): Illuminate\View\View->getContents()
+#21 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/View.php(91): Illuminate\View\View->renderContents()
+#22 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Http/Response.php(69): Illuminate\View\View->render()
+#23 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Http/Response.php(35): Illuminate\Http\Response->setContent(Object(Illuminate\View\View))
+#24 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(55): Illuminate\Http\Response->__construct(Object(Illuminate\View\View), 500, Array)
+#25 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(85): Illuminate\Routing\ResponseFactory->make(Object(Illuminate\View\View), 500, Array)
+#26 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(585): Illuminate\Routing\ResponseFactory->view('errors::500', Array, 500, Array)
+#27 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(490): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#28 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(356): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#29 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Facade\Ignition\Exceptions\ViewException))
+#30 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(173): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Facade\Ignition\Exceptions\ViewException))
+#31 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Facade\Ignition\Exceptions\ViewException))
+#32 {main}
+  thrown in /home/cuanmudah/public_html/resources/views/errors/minimal.blade.php on line 9
+[12-May-2025 14:36:08 UTC] PHP Fatal error:  Uncaught ErrorException: Undefined variable $settings in /home/cuanmudah/public_html/storage/framework/views/a24949469804eb21854a4fc13336434d8f59cebb.php:9
+Stack trace:
+#0 /home/cuanmudah/public_html/storage/framework/views/a24949469804eb21854a4fc13336434d8f59cebb.php(9): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(2, 'Undefined varia...', '/home/cuanmudah...', 9)
+#1 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(107): require('/home/cuanmudah...')
+#2 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(108): Illuminate\Filesystem\Filesystem::Illuminate\Filesystem\{closure}()
+#3 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(58): Illuminate\Filesystem\Filesystem->getRequire('/home/cuanmudah...', Array)
+#4 /home/cuanmudah/public_html/vendor/livewire/livewire/src/ComponentConcerns/RendersLivewireComponents.php(69): Illuminate\View\Engines\PhpEngine->evaluatePath('/home/cuanmudah...', Array)
+#5 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(61): Livewire\CompilerEngineForIgnition->evaluatePath('/home/cuanmudah...', Array)
+#6 /home/cuanmudah/public_html/vendor/facade/ignition/src/Views/Engines/CompilerEngine.php(37): Illuminate\View\Engines\CompilerEngine->get('/home/cuanmudah...', Array)
+#7 /home/cuanmudah/public_html/vendor/livewire/livewire/src/ComponentConcerns/RendersLivewireComponents.php(35): Facade\Ignition\Views\Engines\CompilerEngine->get('/home/cuanmudah...', Array)
+#8 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/View.php(139): Livewire\CompilerEngineForIgnition->get('/home/cuanmudah...', Array)
+#9 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/View.php(122): Illuminate\View\View->getContents()
+#10 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/View.php(91): Illuminate\View\View->renderContents()
+#11 /home/cuanmudah/public_html/storage/framework/views/bacfcfc94b588d1e3e7cd13e63f9c851ed1d85d8.php(5): Illuminate\View\View->render()
+#12 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(107): require('/home/cuanmudah...')
+#13 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(108): Illuminate\Filesystem\Filesystem::Illuminate\Filesystem\{closure}()
+#14 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(58): Illuminate\Filesystem\Filesystem->getRequire('/home/cuanmudah...', Array)
+#15 /home/cuanmudah/public_html/vendor/livewire/livewire/src/ComponentConcerns/RendersLivewireComponents.php(69): Illuminate\View\Engines\PhpEngine->evaluatePath('/home/cuanmudah...', Array)
+#16 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(61): Livewire\CompilerEngineForIgnition->evaluatePath('/home/cuanmudah...', Array)
+#17 /home/cuanmudah/public_html/vendor/facade/ignition/src/Views/Engines/CompilerEngine.php(37): Illuminate\View\Engines\CompilerEngine->get('/home/cuanmudah...', Array)
+#18 /home/cuanmudah/public_html/vendor/livewire/livewire/src/ComponentConcerns/RendersLivewireComponents.php(35): Facade\Ignition\Views\Engines\CompilerEngine->get('/home/cuanmudah...', Array)
+#19 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/View.php(139): Livewire\CompilerEngineForIgnition->get('/home/cuanmudah...', Array)
+#20 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/View.php(122): Illuminate\View\View->getContents()
+#21 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/View.php(91): Illuminate\View\View->renderContents()
+#22 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Http/Response.php(69): Illuminate\View\View->render()
+#23 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Http/Response.php(35): Illuminate\Http\Response->setContent(Object(Illuminate\View\View))
+#24 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(55): Illuminate\Http\Response->__construct(Object(Illuminate\View\View), 500, Array)
+#25 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(85): Illuminate\Routing\ResponseFactory->make(Object(Illuminate\View\View), 500, Array)
+#26 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(585): Illuminate\Routing\ResponseFactory->view('errors::500', Array, 500, Array)
+#27 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(490): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#28 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(356): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#29 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Facade\Ignition\Exceptions\ViewException))
+#30 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(173): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Facade\Ignition\Exceptions\ViewException))
+#31 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Facade\Ignition\Exceptions\ViewException))
+#32 {main}
+
+Next Facade\Ignition\Exceptions\ViewException: Undefined variable $settings (View: /home/cuanmudah/public_html/resources/views/errors/minimal.blade.php) in /home/cuanmudah/public_html/resources/views/errors/minimal.blade.php:9
+Stack trace:
+#0 /home/cuanmudah/public_html/resources/views/errors/minimal.blade.php(9): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(2, 'Undefined varia...', '/home/cuanmudah...', 9)
+#1 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(107): require('/home/cuanmudah...')
+#2 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(108): Illuminate\Filesystem\Filesystem::Illuminate\Filesystem\{closure}()
+#3 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(58): Illuminate\Filesystem\Filesystem->getRequire('/home/cuanmudah...', Array)
+#4 /home/cuanmudah/public_html/vendor/livewire/livewire/src/ComponentConcerns/RendersLivewireComponents.php(69): Illuminate\View\Engines\PhpEngine->evaluatePath('/home/cuanmudah...', Array)
+#5 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(61): Livewire\CompilerEngineForIgnition->evaluatePath('/home/cuanmudah...', Array)
+#6 /home/cuanmudah/public_html/vendor/facade/ignition/src/Views/Engines/CompilerEngine.php(37): Illuminate\View\Engines\CompilerEngine->get('/home/cuanmudah...', Array)
+#7 /home/cuanmudah/public_html/vendor/livewire/livewire/src/ComponentConcerns/RendersLivewireComponents.php(35): Facade\Ignition\Views\Engines\CompilerEngine->get('/home/cuanmudah...', Array)
+#8 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/View.php(139): Livewire\CompilerEngineForIgnition->get('/home/cuanmudah...', Array)
+#9 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/View.php(122): Illuminate\View\View->getContents()
+#10 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/View.php(91): Illuminate\View\View->renderContents()
+#11 /home/cuanmudah/public_html/resources/views/errors/500.blade.php(5): Illuminate\View\View->render()
+#12 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(107): require('/home/cuanmudah...')
+#13 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(108): Illuminate\Filesystem\Filesystem::Illuminate\Filesystem\{closure}()
+#14 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(58): Illuminate\Filesystem\Filesystem->getRequire('/home/cuanmudah...', Array)
+#15 /home/cuanmudah/public_html/vendor/livewire/livewire/src/ComponentConcerns/RendersLivewireComponents.php(69): Illuminate\View\Engines\PhpEngine->evaluatePath('/home/cuanmudah...', Array)
+#16 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(61): Livewire\CompilerEngineForIgnition->evaluatePath('/home/cuanmudah...', Array)
+#17 /home/cuanmudah/public_html/vendor/facade/ignition/src/Views/Engines/CompilerEngine.php(37): Illuminate\View\Engines\CompilerEngine->get('/home/cuanmudah...', Array)
+#18 /home/cuanmudah/public_html/vendor/livewire/livewire/src/ComponentConcerns/RendersLivewireComponents.php(35): Facade\Ignition\Views\Engines\CompilerEngine->get('/home/cuanmudah...', Array)
+#19 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/View.php(139): Livewire\CompilerEngineForIgnition->get('/home/cuanmudah...', Array)
+#20 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/View.php(122): Illuminate\View\View->getContents()
+#21 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/View/View.php(91): Illuminate\View\View->renderContents()
+#22 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Http/Response.php(69): Illuminate\View\View->render()
+#23 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Http/Response.php(35): Illuminate\Http\Response->setContent(Object(Illuminate\View\View))
+#24 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(55): Illuminate\Http\Response->__construct(Object(Illuminate\View\View), 500, Array)
+#25 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(85): Illuminate\Routing\ResponseFactory->make(Object(Illuminate\View\View), 500, Array)
+#26 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(585): Illuminate\Routing\ResponseFactory->view('errors::500', Array, 500, Array)
+#27 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(490): Illuminate\Foundation\Exceptions\Handler->renderHttpException(Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#28 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(356): Illuminate\Foundation\Exceptions\Handler->prepareResponse(Object(Illuminate\Http\Request), Object(Symfony\Component\HttpKernel\Exception\HttpException))
+#29 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Facade\Ignition\Exceptions\ViewException))
+#30 /home/cuanmudah/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(173): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Facade\Ignition\Exceptions\ViewException))
+#31 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Facade\Ignition\Exceptions\ViewException))
+#32 {main}
+  thrown in /home/cuanmudah/public_html/resources/views/errors/minimal.blade.php on line 9
+[13-May-2025 01:40:45 UTC] PHP Warning:  require_once(/home/cuanmudah/public_html/public/index.php): Failed to open stream: No such file or directory in /home/cuanmudah/public_html/server.php on line 21
+[13-May-2025 01:40:45 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/cuanmudah/public_html/public/index.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/cuanmudah/public_html/server.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/cuanmudah/public_html/server.php on line 21
+[15-May-2025 07:05:13 UTC] PHP Deprecated:  Using ${var} in strings is deprecated, use {$var} instead in /home/cuanmudah/public_html/vendor/facade/ignition/src/SolutionProviders/MergeConflictSolutionProvider.php on line 52
+[22-May-2025 02:33:44 UTC] PHP Warning:  require_once(/home/cuanmudah/public_html/public/index.php): Failed to open stream: No such file or directory in /home/cuanmudah/public_html/server.php on line 21
+[22-May-2025 02:33:44 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/cuanmudah/public_html/public/index.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home/cuanmudah/public_html/server.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/cuanmudah/public_html/server.php on line 21
+[22-May-2025 22:43:38 UTC] PHP Deprecated:  Using ${var} in strings is deprecated, use {$var} instead in /home/cuanmudah/public_html/vendor/facade/ignition/src/SolutionProviders/MergeConflictSolutionProvider.php on line 52
+[30-May-2025 20:59:14 UTC] PHP Warning:  require_once(/home/cuanmudah/public_html/public/index.php): Failed to open stream: No such file or directory in /home/cuanmudah/public_html/server.php on line 21
+[30-May-2025 20:59:14 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/cuanmudah/public_html/public/index.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home/cuanmudah/public_html/server.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/cuanmudah/public_html/server.php on line 21
+[30-May-2025 23:07:36 UTC] PHP Deprecated:  Using ${var} in strings is deprecated, use {$var} instead in /home/cuanmudah/public_html/vendor/facade/ignition/src/SolutionProviders/MergeConflictSolutionProvider.php on line 52
+[02-Jun-2025 04:18:42 UTC] PHP Deprecated:  Using ${var} in strings is deprecated, use {$var} instead in /home/cuanmudah/public_html/vendor/facade/ignition/src/SolutionProviders/MergeConflictSolutionProvider.php on line 52
+[03-Jun-2025 23:25:10 UTC] PHP Deprecated:  Using ${var} in strings is deprecated, use {$var} instead in /home/cuanmudah/public_html/vendor/facade/ignition/src/SolutionProviders/MergeConflictSolutionProvider.php on line 52
+[06-Jun-2025 10:43:28 UTC] PHP Warning:  require_once(/home/cuanmudah/public_html/public/index.php): Failed to open stream: No such file or directory in /home/cuanmudah/public_html/server.php on line 21
+[06-Jun-2025 10:43:28 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/cuanmudah/public_html/public/index.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home/cuanmudah/public_html/server.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/cuanmudah/public_html/server.php on line 21
+[07-Jun-2025 03:42:40 UTC] PHP Deprecated:  Using ${var} in strings is deprecated, use {$var} instead in /home/cuanmudah/public_html/vendor/facade/ignition/src/SolutionProviders/MergeConflictSolutionProvider.php on line 52
+[09-Jun-2025 09:25:46 UTC] PHP Warning:  require_once(/home/cuanmudah/public_html/public/index.php): Failed to open stream: No such file or directory in /home/cuanmudah/public_html/server.php on line 21
+[09-Jun-2025 09:25:46 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/cuanmudah/public_html/public/index.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home/cuanmudah/public_html/server.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/cuanmudah/public_html/server.php on line 21
+[12-Jun-2025 03:51:27 UTC] PHP Deprecated:  Using ${var} in strings is deprecated, use {$var} instead in /home/cuanmudah/public_html/vendor/facade/ignition/src/SolutionProviders/MergeConflictSolutionProvider.php on line 52
+[25-Jun-2025 19:05:03 UTC] PHP Deprecated:  Using ${var} in strings is deprecated, use {$var} instead in /home/cuanmudah/public_html/vendor/facade/ignition/src/SolutionProviders/MergeConflictSolutionProvider.php on line 52
+[30-Jun-2025 19:25:14 UTC] PHP Deprecated:  Using ${var} in strings is deprecated, use {$var} instead in /home/cuanmudah/public_html/vendor/facade/ignition/src/SolutionProviders/MergeConflictSolutionProvider.php on line 52
+[01-Jul-2025 19:44:46 UTC] PHP Deprecated:  Using ${var} in strings is deprecated, use {$var} instead in /home/cuanmudah/public_html/vendor/facade/ignition/src/SolutionProviders/MergeConflictSolutionProvider.php on line 52
+[20-Jul-2025 22:42:38 UTC] PHP Deprecated:  Using ${var} in strings is deprecated, use {$var} instead in /home/cuanmudah/public_html/vendor/facade/ignition/src/SolutionProviders/MergeConflictSolutionProvider.php on line 52
+[24-Jul-2025 00:18:20 UTC] PHP Deprecated:  Using ${var} in strings is deprecated, use {$var} instead in /home/cuanmudah/public_html/vendor/facade/ignition/src/SolutionProviders/MergeConflictSolutionProvider.php on line 52
+[25-Jul-2025 19:01:22 UTC] PHP Deprecated:  Using ${var} in strings is deprecated, use {$var} instead in /home/cuanmudah/public_html/vendor/facade/ignition/src/SolutionProviders/MergeConflictSolutionProvider.php on line 52
+[27-Jul-2025 20:03:54 UTC] PHP Deprecated:  Using ${var} in strings is deprecated, use {$var} instead in /home/cuanmudah/public_html/vendor/facade/ignition/src/SolutionProviders/MergeConflictSolutionProvider.php on line 52
+[01-Aug-2025 19:33:19 UTC] PHP Warning:  require_once(/home/cuanmudah/public_html/public/index.php): Failed to open stream: No such file or directory in /home/cuanmudah/public_html/server.php on line 21
+[01-Aug-2025 19:33:19 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/cuanmudah/public_html/public/index.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home/cuanmudah/public_html/server.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/cuanmudah/public_html/server.php on line 21
+[05-Aug-2025 05:58:12 UTC] PHP Deprecated:  Using ${var} in strings is deprecated, use {$var} instead in /home/cuanmudah/public_html/vendor/facade/ignition/src/SolutionProviders/MergeConflictSolutionProvider.php on line 52
