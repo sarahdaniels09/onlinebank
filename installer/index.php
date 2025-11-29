@@ -303,13 +303,20 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>OnlineBank Installer</title>
+    <meta name="theme-color" content="#2563eb">
+    <!-- Fonts: use Inter for a modern, clean UI -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="wrap">
     <header>
-        <h1>OnlineBank Installer</h1>
-        <p class="muted">This installer will create <code>.env</code>, test DB connection and optionally run migrations, import SQL dumps, extract vendor/assets and create an admin user. Remove the <code>installer/</code> folder after finishing.</p>
+        <div class="brand-badge">OB</div>
+        <div>
+            <h1>OnlineBank Installer</h1>
+            <p class="muted">This installer will create <code>.env</code>, test DB connection and optionally run migrations, import SQL dumps, extract vendor/assets and create an admin user. Remove the <code>installer/</code> folder after finishing.</p>
+        </div>
     </header>
 
     <?php if(!empty($errors)): ?>
@@ -349,13 +356,15 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         <label><input type="checkbox" name="APP_DEBUG" <?php if(isset($_POST['APP_DEBUG'])) echo 'checked'; ?>> Enable APP_DEBUG</label>
 
         <h2>Database Settings</h2>
-        <label>DB_HOST <input name="DB_HOST" value="<?php echo htmlspecialchars($_POST['DB_HOST'] ?? '127.0.0.1'); ?>"></label>
-        <label>DB_PORT <input name="DB_PORT" value="<?php echo htmlspecialchars($_POST['DB_PORT'] ?? '3306'); ?>"></label>
-        <label>DB_DATABASE <input name="DB_DATABASE" value="<?php echo htmlspecialchars($_POST['DB_DATABASE'] ?? 'onlinebank'); ?>"></label>
-        <label>DB_USERNAME <input name="DB_USERNAME" value="<?php echo htmlspecialchars($_POST['DB_USERNAME'] ?? 'root'); ?>"></label>
-        <label>DB_PASSWORD <input name="DB_PASSWORD" value="<?php echo htmlspecialchars($_POST['DB_PASSWORD'] ?? ''); ?>" type="password"></label>
+        <div class="grid">
+            <label>DB_HOST <input name="DB_HOST" value="<?php echo htmlspecialchars($_POST['DB_HOST'] ?? '127.0.0.1'); ?>"></label>
+            <label>DB_PORT <input name="DB_PORT" value="<?php echo htmlspecialchars($_POST['DB_PORT'] ?? '3306'); ?>"></label>
+            <label>DB_DATABASE <input name="DB_DATABASE" value="<?php echo htmlspecialchars($_POST['DB_DATABASE'] ?? 'onlinebank'); ?>"></label>
+            <label>DB_USERNAME <input name="DB_USERNAME" value="<?php echo htmlspecialchars($_POST['DB_USERNAME'] ?? 'root'); ?>"></label>
+            <label class="full">DB_PASSWORD <input name="DB_PASSWORD" value="<?php echo htmlspecialchars($_POST['DB_PASSWORD'] ?? ''); ?>" type="password"></label>
+        </div>
 
-        <label><input type="checkbox" name="run_migrations"> Run migrations automatically (requires SSH/exec privileges)</label>
+        <label class="checkbox-row"><input type="checkbox" name="run_migrations"> Run migrations automatically (requires SSH/exec privileges)</label>
 
         <h2>Optional: Import SQL / Upload Assets</h2>
         <label>SQL dump (.sql) to import
