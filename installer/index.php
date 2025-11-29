@@ -80,6 +80,52 @@ $messages = [];
 $errors = [];
 $step = 'form';
 
+// AJAX handler: license verification against a verification server
+if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'verify_license'){
+    header('Content-Type: application/json');
+    $purchase_code = trim($_POST['purchase_code'] ?? '');
+    $license_server_url = trim($_POST['license_server_url'] ?? '');
+    if(!$purchase_code){
+        echo json_encode(['success' => false, 'message' => 'Please provide a purchase code.']);
+        exit;
+    }
+    if(!$license_server_url){
+        echo json_encode(['success' => false, 'message' => 'No license server URL provided.']);
+        exit;
+    }
+    if(!function_exists('curl_init')){
+        echo json_encode(['success' => false, 'message' => 'cURL is not available on this server.']);
+        exit;
+    }
+    $payload = json_encode(['purchase_code' => $purchase_code]);
+    $ch = curl_init($license_server_url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Content-Type: application/json',
+        'Accept: application/json',
+        'User-Agent: OnlineBank Installer'
+    ]);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+    $res = curl_exec($ch);
+    $http = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $err = curl_error($ch);
+    curl_close($ch);
+    if($res === false){
+        echo json_encode(['success'=>false,'message'=>'License server request failed: '.$err]);
+        exit;
+    }
+    $data = json_decode($res, true);
+    if($http === 200 && is_array($data) && !empty($data['valid'])){
+        echo json_encode(['success'=>true,'message'=>'License verified','data'=>$data]);
+        exit;
+    }
+    $msg = is_array($data) && isset($data['message']) ? $data['message'] : ($res ?: 'Verification failed');
+    echo json_encode(['success'=>false,'message'=>'Verification failed: '.$msg,'http'=>$http,'raw'=>$data]);
+    exit;
+}
+
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     // Basic CSRF-like check: confirm checkbox
     $confirm = isset($_POST['confirm']) && $_POST['confirm'] === 'on';
@@ -222,8 +268,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 }
             }
 
-            // Import SQL dump if uploaded
-            if(isset($_FILES['sql_file']) && $_FILES['sql_file']['error'] === UPLOAD_ERR_OK){
+            // Import SQL dump if uploaded (required on final submit)
+            if(isset($_POST['final_submit']) && $_POST['final_submit'] === '1' && (!isset($_FILES['sql_file']) || $_FILES['sql_file']['error'] !== UPLOAD_ERR_OK)){
+                $errors[] = 'SQL import is required: please upload a .sql file on the Import SQL step.';
+            } elseif(isset($_FILES['sql_file']) && $_FILES['sql_file']['error'] === UPLOAD_ERR_OK){
                 $tmp = $_FILES['sql_file']['tmp_name'];
                 $sqlContent = file_get_contents($tmp);
                 if($sqlContent !== false){
@@ -291,6 +339,15 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 }
             }
 
+            // If this was the final submission and no errors, redirect to app homepage
+            if(isset($_POST['final_submit']) && $_POST['final_submit'] === '1' && count($errors) === 0){
+                // Determine redirect URL from provided APP_URL or fallback to '/'
+                $redirect = $app_url ?: '/';
+                // Ensure it's a valid URL or path
+                header('Location: ' . $redirect);
+                exit;
+            }
+
             $step = 'done';
         }
     }
@@ -342,47 +399,69 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     <?php endif; ?>
 
     <?php if($step === 'form'): ?>
-    <form method="post" class="installer-form" enctype="multipart/form-data">
+    <form id="installerForm" method="post" class="installer-form" enctype="multipart/form-data">
+        <input type="hidden" name="final_submit" id="final_submit" value="0">
         <h2>Application Settings</h2>
-        <label>APP_URL
-            <input name="APP_URL" value="<?php echo htmlspecialchars($_POST['APP_URL'] ?? 'http://' . ($_SERVER['HTTP_HOST'] ?? 'localhost')); ?>">
-        </label>
-        <label>APP_ENV
-            <select name="APP_ENV">
-                <option value="production" <?php if(($_POST['APP_ENV'] ?? '')==='production') echo 'selected'; ?>>production</option>
-                <option value="local" <?php if(($_POST['APP_ENV'] ?? '')==='local') echo 'selected'; ?>>local</option>
-            </select>
-        </label>
-        <label><input type="checkbox" name="APP_DEBUG" <?php if(isset($_POST['APP_DEBUG'])) echo 'checked'; ?>> Enable APP_DEBUG</label>
-
-        <h2>Database Settings</h2>
-        <div class="grid">
-            <label>DB_HOST <input name="DB_HOST" value="<?php echo htmlspecialchars($_POST['DB_HOST'] ?? '127.0.0.1'); ?>"></label>
-            <label>DB_PORT <input name="DB_PORT" value="<?php echo htmlspecialchars($_POST['DB_PORT'] ?? '3306'); ?>"></label>
-            <label>DB_DATABASE <input name="DB_DATABASE" value="<?php echo htmlspecialchars($_POST['DB_DATABASE'] ?? 'onlinebank'); ?>"></label>
-            <label>DB_USERNAME <input name="DB_USERNAME" value="<?php echo htmlspecialchars($_POST['DB_USERNAME'] ?? 'root'); ?>"></label>
-            <label class="full">DB_PASSWORD <input name="DB_PASSWORD" value="<?php echo htmlspecialchars($_POST['DB_PASSWORD'] ?? ''); ?>" type="password"></label>
+        <!-- Step wizard UI will control visibility of sections -->
+        <div id="stepIndicator" class="note">Step <span id="currentStep">1</span> of 4</div>
+        <div class="step" data-step="1">
+            <label>Purchase code (Envato) <input name="purchase_code" id="purchase_code" value="<?php echo htmlspecialchars($_POST['purchase_code'] ?? ''); ?>" placeholder="Enter purchase code"></label>
+            <label>License server URL <input name="license_server_url" id="license_server_url" value="<?php echo htmlspecialchars($_POST['license_server_url'] ?? ''); ?>" placeholder="https://your-verification-server.com/api/verify"></label>
+            <div class="actions">
+                <button type="button" id="verifyButton" class="btn ghost">Verify License</button>
+                <div id="verifyResult" class="note"></div>
+            </div>
+            <div class="note">You can proceed without verification (will save purchase code as unverified) by checking the checkbox at the end of this step.</div>
+            <label class="checkbox-row"><input type="checkbox" id="proceed_unverified" name="proceed_unverified"> Proceed without verification (save purchase code unverified)</label>
         </div>
 
-        <label class="checkbox-row"><input type="checkbox" name="run_migrations"> Run migrations automatically (requires SSH/exec privileges)</label>
+        <div class="step" data-step="2" style="display:none">
+            <label>APP_URL
+                <input name="APP_URL" value="<?php echo htmlspecialchars($_POST['APP_URL'] ?? 'http://' . ($_SERVER['HTTP_HOST'] ?? 'localhost')); ?>">
+            </label>
+            <label>APP_ENV
+                <select name="APP_ENV">
+                    <option value="production" <?php if(($_POST['APP_ENV'] ?? '')==='production') echo 'selected'; ?>>production</option>
+                    <option value="local" <?php if(($_POST['APP_ENV'] ?? '')==='local') echo 'selected'; ?>>local</option>
+                </select>
+            </label>
+            <label><input type="checkbox" name="APP_DEBUG" <?php if(isset($_POST['APP_DEBUG'])) echo 'checked'; ?>> Enable APP_DEBUG</label>
+            <h2>Database Settings</h2>
+            <div class="grid">
+                <label>DB_HOST <input name="DB_HOST" value="<?php echo htmlspecialchars($_POST['DB_HOST'] ?? '127.0.0.1'); ?>"></label>
+                <label>DB_PORT <input name="DB_PORT" value="<?php echo htmlspecialchars($_POST['DB_PORT'] ?? '3306'); ?>"></label>
+                <label>DB_DATABASE <input name="DB_DATABASE" value="<?php echo htmlspecialchars($_POST['DB_DATABASE'] ?? 'onlinebank'); ?>"></label>
+                <label>DB_USERNAME <input name="DB_USERNAME" value="<?php echo htmlspecialchars($_POST['DB_USERNAME'] ?? 'root'); ?>"></label>
+                <label class="full">DB_PASSWORD <input name="DB_PASSWORD" value="<?php echo htmlspecialchars($_POST['DB_PASSWORD'] ?? ''); ?>" type="password"></label>
+            </div>
+            <label class="checkbox-row"><input type="checkbox" name="run_migrations"> Run migrations automatically (requires SSH/exec privileges)</label>
+        </div>
+        <div class="step" data-step="3" style="display:none">
+            <h2>Import SQL (required)</h2>
+            <label class="note">You must upload a SQL dump (.sql) on this step. The installer will import it into the configured database.</label>
+            <label class="full">SQL dump (.sql) to import <input type="file" name="sql_file" id="sql_file" accept=".sql"></label>
+            <label class="full">ZIP with <code>vendor/</code> and/or <code>public/</code> assets (optional)
+                <input type="file" name="assets_zip" accept=".zip">
+            </label>
+        </div>
 
-        <h2>Optional: Import SQL / Upload Assets</h2>
-        <label>SQL dump (.sql) to import
-            <input type="file" name="sql_file" accept=".sql">
-        </label>
-        <label>ZIP with <code>vendor/</code> and/or <code>public/</code> assets (optional)
-            <input type="file" name="assets_zip" accept=".zip">
-        </label>
+        <div class="step" data-step="4" style="display:none">
+            <h2>Create Admin User</h2>
+            <label>Admin name <input name="admin_name" id="admin_name" value="<?php echo htmlspecialchars($_POST['admin_name'] ?? 'Admin'); ?>"></label>
+            <label>Admin email <input name="admin_email" id="admin_email" value="<?php echo htmlspecialchars($_POST['admin_email'] ?? ''); ?>" type="email"></label>
+            <label>Admin password <input type="password" id="admin_password" name="admin_password" value=""></label>
 
-        <h2>Optional: Create Admin User</h2>
-        <label>Admin name <input name="admin_name" value="<?php echo htmlspecialchars($_POST['admin_name'] ?? 'Admin'); ?>"></label>
-        <label>Admin email <input name="admin_email" value="<?php echo htmlspecialchars($_POST['admin_email'] ?? ''); ?>"></label>
-        <label>Admin password <input type="password" name="admin_password" value=""></label>
+            <label class="checkbox-row"><input type="checkbox" name="confirm" id="confirm_checkbox"> I understand this will create/overwrite <code>.env</code>, may run migrations and import SQL. I will remove <code>installer/</code> after use.</label>
 
-        <label><input type="checkbox" name="confirm"> I understand this will create/overwrite <code>.env</code>, may run migrations and import SQL. I will remove <code>installer/</code> after use.</label>
-
-        <div class="actions">
-            <button class="btn primary" type="submit">Install</button>
+            <div class="actions">
+                <button type="button" class="btn" id="prevBtn">Back</button>
+                <button type="button" class="btn ghost" id="cancelBtn">Cancel</button>
+                <button type="button" class="btn primary" id="finalInstallBtn">Install</button>
+            </div>
+        </div>
+        <div class="actions" style="margin-top:10px">
+            <button type="button" class="btn" id="backButton" style="display:none">Back</button>
+            <button type="button" class="btn primary" id="nextButton">Next</button>
         </div>
     </form>
     <?php else: ?>
@@ -401,5 +480,91 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         <p class="muted">Installer created for packaging. Review output and execute unresolved commands manually if needed.</p>
     </footer>
 </div>
+<script>
+// Multi-step wizard and license verification
+(function(){
+    const steps = Array.from(document.querySelectorAll('.step'));
+    let current = 0;
+    const currentStepEl = document.getElementById('currentStep');
+    const nextButton = document.getElementById('nextButton');
+    const backButton = document.getElementById('backButton');
+    const verifyBtn = document.getElementById('verifyButton');
+    const verifyResult = document.getElementById('verifyResult');
+    const proceedUnverified = document.getElementById('proceed_unverified');
+    const form = document.getElementById('installerForm');
+    const finalInstallBtn = document.getElementById('finalInstallBtn');
+    const finalSubmitInput = document.getElementById('final_submit');
+
+    function showStep(i){
+        steps.forEach(s=> s.style.display='none');
+        steps[i].style.display='block';
+        current = i;
+        currentStepEl.textContent = (i+1);
+        backButton.style.display = i>0 ? 'inline-flex' : 'none';
+        nextButton.style.display = i<steps.length-1 ? 'inline-flex' : 'none';
+    }
+
+    nextButton.addEventListener('click', function(){
+        // simple validation: on step 1 ensure either verification succeeded or proceed_unverified checked
+        if(current === 0){
+            if(!verifyResult.dataset.verified && !proceedUnverified.checked){
+                alert('Please verify the license or choose to proceed without verification.');
+                return;
+            }
+        }
+        if(current === 2){
+            // ensure SQL file present
+            const sql = document.getElementById('sql_file');
+            if(!sql || !sql.files || sql.files.length === 0){
+                alert('Please upload a SQL dump (.sql) on this step.');
+                return;
+            }
+        }
+        showStep(Math.min(steps.length-1, current+1));
+    });
+
+    backButton.addEventListener('click', function(){ showStep(Math.max(0, current-1)); });
+
+    verifyBtn.addEventListener('click', function(){
+        const code = document.getElementById('purchase_code').value.trim();
+        const url = document.getElementById('license_server_url').value.trim();
+        verifyResult.textContent = 'Verifying...';
+        fetch(window.location.href, {
+            method: 'POST',
+            headers: {'Content-Type':'application/x-www-form-urlencoded'},
+            body: 'action=verify_license&purchase_code='+encodeURIComponent(code)+'&license_server_url='+encodeURIComponent(url)
+        }).then(r=>r.json()).then(function(data){
+            if(data.success){
+                verifyResult.textContent = 'Verified ✓';
+                verifyResult.style.color = '#059669';
+                verifyResult.dataset.verified = '1';
+            } else {
+                verifyResult.textContent = data.message || 'Verification failed';
+                verifyResult.style.color = '#b91c1c';
+                verifyResult.dataset.verified = '';
+            }
+        }).catch(function(err){
+            verifyResult.textContent = 'Network error';
+            verifyResult.style.color = '#b91c1c';
+            verifyResult.dataset.verified = '';
+        });
+    });
+
+    // Final install button: set final_submit then submit
+    if(finalInstallBtn){
+        finalInstallBtn.addEventListener('click', function(){
+            if(!document.getElementById('confirm_checkbox') || !document.getElementById('confirm_checkbox').checked){
+                alert('Please confirm you understand the installer will create/overwrite .env and may run migrations.');
+                return;
+            }
+            finalSubmitInput.value = '1';
+            form.submit();
+        });
+    }
+
+    // initial
+    showStep(0);
+})();
+</script>
 </body>
 </html>
