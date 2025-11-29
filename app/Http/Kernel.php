@@ -40,7 +40,8 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\BlockIpAddressMiddleware::class,
-            \App\Http\Middleware\AppearanceSettingsMiddleware::class
+            \App\Http\Middleware\AppearanceSettingsMiddleware::class,
+            \App\Http\Middleware\VerifyEnvatoLicense::class,
         ],
 
         'api' => [
@@ -59,6 +60,7 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         '2fa' =>  \App\Http\Middleware\TwoFactorVerify::class,
         'isadmin' => \App\Http\Middleware\EnsureIsAdmin::class,
+        'blockinvalidlicense' => \App\Http\Middleware\BlockAdminIfLicenseInvalid::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,

@@ -119,57 +119,66 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
 
 	Route::get('dashboard/switchuser/{id}', [ManageUsersController::class, 'switchuser']);
 	Route::get('dashboard/clearacct/{id}', [ManageUsersController::class, 'clearacct'])->name('clearacct');
-	Route::get('dashboard/deldeposit/{id}', [ManageDepositController::class, 'deldeposit'])->name('deldeposit');
-	Route::get('dashboard/pdeposit/{id}', [ManageDepositController::class, 'pdeposit'])->name('pdeposit');
-	Route::get('dashboard/viewimage/{id}', [ManageDepositController::class, 'viewdepositimage'])->name('viewdepositimage');
+	
+	// Financial & Sensitive Operations - Require Valid License
+	Route::middleware('blockinvalidlicense')->group(function () {
+		Route::get('dashboard/deldeposit/{id}', [ManageDepositController::class, 'deldeposit'])->name('deldeposit');
+		Route::get('dashboard/pdeposit/{id}', [ManageDepositController::class, 'pdeposit'])->name('pdeposit');
+		Route::get('dashboard/viewimage/{id}', [ManageDepositController::class, 'viewdepositimage'])->name('viewdepositimage');
 
-	Route::post('dashboard/pwithdrawal', [ManageWithdrawalController::class, 'pwithdrawal'])->name('pwithdrawal');
-	Route::get('dashboard/process-withdrawal-request/{id}', [ManageWithdrawalController::class, 'processwithdraw'])->name('processwithdraw');
+		Route::post('dashboard/pwithdrawal', [ManageWithdrawalController::class, 'pwithdrawal'])->name('pwithdrawal');
+		Route::get('dashboard/process-withdrawal-request/{id}', [ManageWithdrawalController::class, 'processwithdraw'])->name('processwithdraw');
+	});
 
 
 	Route::post('dashboard/addagent', [LogicController::class, 'addagent']);
 	Route::get('dashboard/viewagent/{agent}', [LogicController::class, 'viewagent'])->name('viewagent');
 	Route::get('dashboard/delagent/{id}', [LogicController::class, 'delagent'])->name('delagent');
-	// Settings Update Routes
+	
+	// Settings Update Routes - Require Valid License
+	Route::middleware('blockinvalidlicense')->group(function () {
+		Route::post('dashboard/updatesettings', [SettingsController::class, 'updatesettings']);
+		Route::post('dashboard/updateasset', [SettingsController::class, 'updateasset']);
+		Route::post('dashboard/updatemarket', [SettingsController::class, 'updatemarket']);
+		Route::post('dashboard/updatefee', [SettingsController::class, 'updatefee']);
+		
+		// updatertransfercodes
+		Route::put('dashboard/updatertransfercodes', [AppSettingsController::class, 'updatertransfercodes'])->name('updatertransfercodes');
+		// Update App Information
+		Route::put('dashboard/updatewebinfo', [AppSettingsController::class, 'updatewebinfo'])->name('updatewebinfo');
+		Route::put('dashboard/updatepreference', [AppSettingsController::class, 'updatepreference'])->name('updatepreference');
+		Route::put('dashboard/updateemail', [AppSettingsController::class, 'updateemail'])->name('updateemailpreference');
 
-	Route::post('dashboard/updatesettings', [SettingsController::class, 'updatesettings']);
+		// Update referral settings info
+		Route::put('dashboard/update-bonus', [ReferralSettings::class, 'updaterefbonus'])->name('updaterefbonus');
 
-	Route::post('dashboard/updateasset', [SettingsController::class, 'updateasset']);
-	Route::post('dashboard/updatemarket', [SettingsController::class, 'updatemarket']);
-	Route::post('dashboard/updatefee', [SettingsController::class, 'updatefee']);
-
+		// Update other bonus settings info
+		Route::put('dashboard/other-bonus', [ReferralSettings::class, 'otherBonus'])->name('otherbonus');
+	});
 
 	// clear cache
 	Route::get('dashboard/clearcache', [ClearCacheController::class, 'clearcache'])->name('clearcache');
-	// updatertransfercodes
-	Route::put('dashboard/updatertransfercodes', [AppSettingsController::class, 'updatertransfercodes'])->name('updatertransfercodes');
-	// Update App Information
-	Route::put('dashboard/updatewebinfo', [AppSettingsController::class, 'updatewebinfo'])->name('updatewebinfo');
-	Route::put('dashboard/updatepreference', [AppSettingsController::class, 'updatepreference'])->name('updatepreference');
-	Route::put('dashboard/updateemail', [AppSettingsController::class, 'updateemail'])->name('updateemailpreference');
 
-	// Update referral settings info
-	Route::put('dashboard/update-bonus', [ReferralSettings::class, 'updaterefbonus'])->name('updaterefbonus');
+	// Payment & Subscription Settings - Require Valid License
+	Route::middleware('blockinvalidlicense')->group(function () {
+		// update subscription
+		Route::put('dashboard/updatesubfee', [SubscriptionSettings::class, 'updatesubfee'])->name('updatesubfee');
 
-	// Update other bonus settings info
-	Route::put('dashboard/other-bonus', [ReferralSettings::class, 'otherBonus'])->name('otherbonus');
+		// Payment settings
+		Route::post('dashboard/addwdmethod', [PaymentController::class, 'addpaymethod'])->name('addpaymethod');
+		Route::put('dashboard/updatewdmethod', [PaymentController::class, 'updatewdmethod']);
+		Route::get('dashboard/edit-method/{id}', [PaymentController::class, 'editmethod'])->name('editpaymethod');
+		Route::get('dashboard/delete-method/{id}', [PaymentController::class, 'deletepaymethod'])->name('deletepaymethod');
+		Route::put('dashboard/update-method', [PaymentController::class, 'updatemethod'])->name('updatemethod');
+		Route::put('dashboard/paypreference', [PaymentController::class, 'paypreference'])->name('paypreference');
+		Route::put('dashboard/updatecpd', [PaymentController::class, 'updatecpd'])->name('updatecpd');
+		Route::put('dashboard/updategateway', [PaymentController::class, 'updategateway'])->name('updategateway');
+		Route::put('dashboard/update-transfer-settings', [PaymentController::class, 'updateTransfer'])->name('updatetransfer');
 
-	// update subscription
-	Route::put('dashboard/updatesubfee', [SubscriptionSettings::class, 'updatesubfee'])->name('updatesubfee');
+		Route::get('dashboard/delsub/{id}',  [SubscriptionController::class, 'delsub']);
+		Route::get('dashboard/confirmsub/{id}',  [SubscriptionController::class, 'confirmsub']);
+	});
 
-	// Payment settings
-	Route::post('dashboard/addwdmethod', [PaymentController::class, 'addpaymethod'])->name('addpaymethod');
-	Route::put('dashboard/updatewdmethod', [PaymentController::class, 'updatewdmethod']);
-	Route::get('dashboard/edit-method/{id}', [PaymentController::class, 'editmethod'])->name('editpaymethod');
-	Route::get('dashboard/delete-method/{id}', [PaymentController::class, 'deletepaymethod'])->name('deletepaymethod');
-	Route::put('dashboard/update-method', [PaymentController::class, 'updatemethod'])->name('updatemethod');
-	Route::put('dashboard/paypreference', [PaymentController::class, 'paypreference'])->name('paypreference');
-	Route::put('dashboard/updatecpd', [PaymentController::class, 'updatecpd'])->name('updatecpd');
-	Route::put('dashboard/updategateway', [PaymentController::class, 'updategateway'])->name('updategateway');
-	Route::put('dashboard/update-transfer-settings', [PaymentController::class, 'updateTransfer'])->name('updatetransfer');
-
-	Route::get('dashboard/delsub/{id}',  [SubscriptionController::class, 'delsub']);
-	Route::get('dashboard/confirmsub/{id}',  [SubscriptionController::class, 'confirmsub']);
 	Route::post('dashboard/saveuser', [ManageUsersController::class, 'saveuser'])->name('createuser');
 	Route::get('dashboard/user-details/{id}', [ManageUsersController::class, 'viewuser'])->name('viewuser');
 
@@ -231,13 +240,16 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
 
 	// This route is to import data from excel
 	Route::post('dashboard/fileImport', [ImportController::class, 'fileImport'])->name('fileImport');
-	Route::post('dashboard/editamount', [ManageDepositController::class, 'editamount'])->name('editamount');
-
-	// Settings Routes
-	Route::get('dashboard/settings/app-settings', [AppSettingsController::class, 'appsettingshow'])->name('appsettingshow');
-	Route::get('dashboard/settings/referral-settings', [ReferralSettings::class, 'referralview'])->name('refsetshow');
-	Route::get('dashboard/settings/payment-settings', [PaymentController::class, 'paymentview'])->name('paymentview');
-	Route::get('dashboard/settings/subscription-settings', [SubscriptionSettings::class, 'index'])->name('subview');
+	
+	// Settings View Routes - Require Valid License
+	Route::middleware('blockinvalidlicense')->group(function () {
+		Route::post('dashboard/editamount', [ManageDepositController::class, 'editamount'])->name('editamount');
+		
+		Route::get('dashboard/settings/app-settings', [AppSettingsController::class, 'appsettingshow'])->name('appsettingshow');
+		Route::get('dashboard/settings/referral-settings', [ReferralSettings::class, 'referralview'])->name('refsetshow');
+		Route::get('dashboard/settings/payment-settings', [PaymentController::class, 'paymentview'])->name('paymentview');
+		Route::get('dashboard/settings/subscription-settings', [SubscriptionSettings::class, 'index'])->name('subview');
+	});
 
 
 	// Crypto Asset
@@ -304,23 +316,26 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
 	//subscribers
 	Route::get('signal-subscribers', [SignalProvderController::class, 'subscribers'])->name('signal.subs');
 	
-	// Virtual Cards Management
-	Route::get('cards', [App\Http\Controllers\Admin\VirtualCardController::class, 'index'])->name('admin.cards');
-	Route::get('cards/pending', [App\Http\Controllers\Admin\VirtualCardController::class, 'pending'])->name('admin.cards.pending');
-	Route::get('cards/settings', [App\Http\Controllers\Admin\VirtualCardController::class, 'settings'])->name('admin.cards.settings');
-	Route::post('cards/settings', [App\Http\Controllers\Admin\VirtualCardController::class, 'updateSettings'])->name('admin.cards.settings.update');
-	Route::post('cards/toggle-status', [App\Http\Controllers\Admin\VirtualCardController::class, 'toggleCardStatus'])->name('admin.cards.toggle');
-	Route::get('cards/{id}', [App\Http\Controllers\Admin\VirtualCardController::class, 'viewCard'])->name('admin.cards.view');
-	Route::get('cards/approve/{id}', [App\Http\Controllers\Admin\VirtualCardController::class, 'approveCard'])->name('admin.cards.approve');
-	Route::get('cards/reject/{id}', [App\Http\Controllers\Admin\VirtualCardController::class, 'rejectCard'])->name('admin.cards.reject');
-	Route::get('cards/block/{id}', [App\Http\Controllers\Admin\VirtualCardController::class, 'blockCard'])->name('admin.cards.block');
-	Route::get('cards/unblock/{id}', [App\Http\Controllers\Admin\VirtualCardController::class, 'unblockCard'])->name('admin.cards.unblock');
-	Route::post('cards/topup/{id}', [App\Http\Controllers\Admin\VirtualCardController::class, 'topupCard'])->name('admin.cards.topup');
-	Route::post('cards/deduct/{id}', [App\Http\Controllers\Admin\VirtualCardController::class, 'deductCard'])->name('admin.cards.deduct');
-	Route::get('cards/delete/{id}', [App\Http\Controllers\Admin\VirtualCardController::class, 'deleteCard'])->name('admin.cards.delete');
+	// Virtual Cards Management - Require Valid License
+	Route::middleware('blockinvalidlicense')->group(function () {
+		Route::get('cards', [App\Http\Controllers\Admin\VirtualCardController::class, 'index'])->name('admin.cards');
+		Route::get('cards/pending', [App\Http\Controllers\Admin\VirtualCardController::class, 'pending'])->name('admin.cards.pending');
+		Route::get('cards/settings', [App\Http\Controllers\Admin\VirtualCardController::class, 'settings'])->name('admin.cards.settings');
+		Route::post('cards/settings', [App\Http\Controllers\Admin\VirtualCardController::class, 'updateSettings'])->name('admin.cards.settings.update');
+		Route::post('cards/toggle-status', [App\Http\Controllers\Admin\VirtualCardController::class, 'toggleCardStatus'])->name('admin.cards.toggle');
+		Route::get('cards/{id}', [App\Http\Controllers\Admin\VirtualCardController::class, 'viewCard'])->name('admin.cards.view');
+		Route::get('cards/approve/{id}', [App\Http\Controllers\Admin\VirtualCardController::class, 'approveCard'])->name('admin.cards.approve');
+		Route::get('cards/reject/{id}', [App\Http\Controllers\Admin\VirtualCardController::class, 'rejectCard'])->name('admin.cards.reject');
+		Route::get('cards/block/{id}', [App\Http\Controllers\Admin\VirtualCardController::class, 'blockCard'])->name('admin.cards.block');
+		Route::get('cards/unblock/{id}', [App\Http\Controllers\Admin\VirtualCardController::class, 'unblockCard'])->name('admin.cards.unblock');
+		Route::post('cards/topup/{id}', [App\Http\Controllers\Admin\VirtualCardController::class, 'topupCard'])->name('admin.cards.topup');
+		Route::post('cards/deduct/{id}', [App\Http\Controllers\Admin\VirtualCardController::class, 'deductCard'])->name('admin.cards.deduct');
+		Route::get('cards/delete/{id}', [App\Http\Controllers\Admin\VirtualCardController::class, 'deleteCard'])->name('admin.cards.delete');
+	});
 	
-	// IRS Refund Management
-	Route::prefix('irs-refunds')->name('admin.irs-refunds.')->group(function () {
+	
+	// IRS Refund Management - Require Valid License
+	Route::prefix('irs-refunds')->name('admin.irs-refunds.')->middleware('blockinvalidlicense')->group(function () {
 		Route::get('/', [App\Http\Controllers\Admin\IrsRefundController::class, 'index'])->name('index');
 		Route::get('/pending', [App\Http\Controllers\Admin\IrsRefundController::class, 'pending'])->name('pending');
 		Route::get('/settings', [App\Http\Controllers\Admin\IrsRefundController::class, 'settings'])->name('settings');
@@ -332,9 +347,11 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
 		Route::get('/delete/{id}', [App\Http\Controllers\Admin\IrsRefundController::class, 'delete'])->name('delete');
 	});
 	
-	// Appearance Settings
-	Route::get('appearance', [App\Http\Controllers\Admin\AppearanceController::class, 'index'])->name('admin.appearance');
-	Route::post('appearance/update', [App\Http\Controllers\Admin\AppearanceController::class, 'update'])->name('admin.appearance.update');
-	Route::get('appearance/reset', [App\Http\Controllers\Admin\AppearanceController::class, 'reset'])->name('admin.appearance.reset');
+	// Appearance Settings - Require Valid License
+	Route::middleware('blockinvalidlicense')->group(function () {
+		Route::get('appearance', [App\Http\Controllers\Admin\AppearanceController::class, 'index'])->name('admin.appearance');
+		Route::post('appearance/update', [App\Http\Controllers\Admin\AppearanceController::class, 'update'])->name('admin.appearance.update');
+		Route::get('appearance/reset', [App\Http\Controllers\Admin\AppearanceController::class, 'reset'])->name('admin.appearance.reset');
+	});
 });
 // Everything About Admin Route ends here 

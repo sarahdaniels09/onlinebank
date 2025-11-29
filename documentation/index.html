@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>OnlineBank — Documentation</title>
+    <meta name="description" content="OnlineBank - Laravel based online banking web app documentation">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<header class="site-header">
+    <div class="container">
+        <a class="brand" href="#">OnlineBank</a>
+        <nav class="main-nav">
+            <a href="#overview">Overview</a>
+            <a href="#features">Features</a>
+            <a href="#installation">Installation</a>
+            <a href="#configuration">Configuration</a>
+            <a href="#usage">Usage</a>
+            <a href="#admin">Admin</a>
+            <a href="#changelog">Changelog</a>
+            <a href="#support">Support</a>
+        </nav>
+        <button id="menuToggle" class="menu-toggle">☰</button>
+    </div>
+</header>
+
+<main>
+    <section class="hero" id="overview">
+        <div class="container">
+            <div class="hero-content">
+                <h1>OnlineBank</h1>
+                <p class="lead">A modern Laravel-based online banking web application — secure, modular and production-ready.</p>
+                <div class="hero-actions">
+                    <a class="btn primary" href="#installation">Get Started</a>
+                    <a class="btn" href="#features">See Features</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <img src="assets/img/screenshot-1.svg" alt="App screenshot">
+            </div>
+        </div>
+    </section>
+
+    <aside class="toc">
+        <div class="container">
+            <h4>On this page</h4>
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#installation">Installation</a></li>
+                <li><a href="#configuration">Configuration</a></li>
+                <li><a href="#usage">Usage</a></li>
+                <li><a href="#admin">Admin Panel</a></li>
+                <li><a href="#routes">Routes & API</a></li>
+                <li><a href="#changelog">Changelog</a></li>
+                <li><a href="#support">Support</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <section class="content" id="features">
+        <div class="container">
+            <h2>Features</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <h3>Accounts & Wallets</h3>
+                    <p>Create and manage user bank accounts, balances, and transfers.</p>
+                </div>
+                <div class="feature">
+                    <h3>Payments & Gateways</h3>
+                    <p>Integrated Paystack, Flutterwave, BitPay and more (configurable via .env).</p>
+                </div>
+                <div class="feature">
+                    <h3>Admin Dashboard</h3>
+                    <p>Admin area for user management, transactions and system configuration.</p>
+                </div>
+                <div class="feature">
+                    <h3>Notifications</h3>
+                    <p>Email, in-app, and push notifications using Laravel Notifications and PWA support.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content" id="installation">
+        <div class="container">
+            <h2>Installation</h2>
+            <p>Follow these steps to get the project running locally.</p>
+
+            <h3>Requirements</h3>
+            <ul>
+                <li>PHP 8+ with required extensions (OpenSSL, PDO, Mbstring, Tokenizer, XML).</li>
+                <li>Composer</li>
+                <li>MySQL or compatible RDBMS</li>
+                <li>Node.js & npm (for asset compilation)</li>
+            </ul>
+
+            <h3>Quick Setup</h3>
+            <pre><code>git clone &lt;repo_url&gt;
+cd onlinebank
+composer install
+cp .env.example .env
+php artisan key:generate
+# configure .env (DB credentials etc.)
+php artisan migrate --seed
+npm install
+npm run dev
+php artisan serve</code></pre>
+
+            <p>For production, configure a proper webserver (Nginx/Apache) and queue/cron workers.</p>
+        </div>
+    </section>
+
+    <section class="content" id="configuration">
+        <div class="container">
+            <h2>Configuration</h2>
+            <p>All secrets and environment-specific values must be set in the <code>.env</code> file. Example keys you'll need to set:</p>
+
+            <div class="env-grid">
+                <div>
+                    <h4>Application</h4>
+                    <pre><code>APP_NAME=
+APP_ENV=production
+APP_URL=https://your-domain.com
+APP_KEY=</code></pre>
+                </div>
+                <div>
+                    <h4>Database</h4>
+                    <pre><code>DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_db
+DB_USERNAME=your_user
+DB_PASSWORD=your_password</code></pre>
+                </div>
+                <div>
+                    <h4>Mail</h4>
+                    <pre><code>MAIL_MAILER=smtp
+MAIL_HOST=smtp.example.com
+MAIL_PORT=587
+MAIL_USERNAME=
+MAIL_PASSWORD=</code></pre>
+                </div>
+                <div>
+                    <h4>Payment</h4>
+                    <pre><code>PAYSTACK_PUBLIC_KEY=
+PAYSTACK_SECRET_KEY=
+FLW_PUBLIC_KEY=
+FLW_SECRET_KEY=
+BITPAY_TOKEN=</code></pre>
+                    <button class="btn" data-copy="#paymentEnv">Copy payment keys</button>
+                </div>
+            </div>
+
+            <p class="note">Important: Never commit your <code>.env</code> file. Use the provided <code>.env.example</code> as a template.</p>
+        </div>
+    </section>
+
+    <section class="content" id="usage">
+        <div class="container">
+            <h2>Usage</h2>
+            <p>Default routes are defined in <code>routes/web.php</code>. Typical flows include user registration, account funding, transfers, and transaction history.</p>
+            <h3>Requirements</h3>
+            <ul>
+                <li>PHP 8+ with required extensions (OpenSSL, PDO, Mbstring, Tokenizer, XML).</li>
+                <li>Composer (or cPanel Composer support / SSH access)</li>
+                <li>MySQL or compatible RDBMS</li>
+                <li>Node.js & npm (for asset compilation)</li>
+                <li>SSH access recommended for production servers</li>
+            </ul>
+
+            <h3>Quick Setup (generic)</h3>
+            <pre><code>git clone &lt;repo_url&gt;
+cd onlinebank
+composer install
+cp .env.example .env
+php artisan key:generate
+# configure .env (DB credentials etc.)
+php artisan migrate --seed
+npm install
+npm run prod
+# Make public directory the webroot (point domain to public/)</code></pre>
+
+            <h3>cPanel (Shared Hosting) Installation</h3>
+            <p>Use this when you host the site on a cPanel shared account. Two recommended approaches are Git deployment (cPanel Git Version Control) or uploading the archive and installing via SSH.</p>
+            <ol>
+                <li>Upload project files to your account. Recommended: upload a packaged ZIP file (CodeCanyon-style package) and extract it into a folder outside <code>public_html</code>.</li>
+                <li><strong>Install from ZIP (recommended for marketplace users)</strong>:
+                    <ol>
+                        <li>In cPanel &gt; File Manager, click <em>Upload</em> and upload the ZIP package (for example <code>onlinebank.zip</code>).</li>
+                        <li>After upload, select the ZIP and click <em>Extract</em>. Extract to a folder such as <code>onlinebank</code> located in your home directory (outside <code>public_html</code>).</li>
+                        <li>Ensure the package includes a <code>public</code> folder. Move the contents of that <code>public</code> folder into <code>public_html</code> (or point the domain document root to the package's <code>public</code> folder if your host supports custom document roots).</li>
+                        <li>Rename <code>.env.example</code> to <code>.env</code> and update database and service credentials using File Manager's edit: specify DB host, name, user and password. If your package includes an SQL dump (e.g. <code>database.sql</code>), import it via phpMyAdmin or the cPanel MySQL Import tool.</li>
+                        <li>If the ZIP includes <code>vendor/</code> and compiled frontend assets (<code>public/css</code>, <code>public/js</code>), you can skip running Composer and NPM on the server. If it does not, use SSH to run <code>composer install</code> and <code>npm run prod</code> when possible.</li>
+                    </ol>
+                </li>
+                <li>Move the contents of the package <strong>public/</strong> folder into <code>public_html</code> (or point the domain document root to the <code>public</code> folder if your host allows).</li>
+                <li>Ensure the following directories are writable: <code>storage</code> and <code>bootstrap/cache</code>. Set CHMOD 755 or 775 as required.</li>
+                <li>Create a MySQL database and user via cPanel &gt; MySQL Databases and set those values in the <code>.env</code> file.</li>
+                <li>If you have SSH access, run these commands over SSH in the project root:
+                    <pre><code>composer install --no-dev --optimize-autoloader
+cp .env.example .env
+php artisan key:generate
+php artisan migrate --force
+php artisan db:seed --force</code></pre>
+                </li>
+                <li>If you don't have SSH/composer, install dependencies locally and upload the <code>vendor/</code> folder. Make sure you match the server PHP version.</li>
+                <li>Build frontend assets locally with <code>npm run prod</code> and upload the <code>public/css</code> and <code>public/js</code> files if the server can't run npm.</li>
+                <li>Set up the scheduled tasks (cron) in cPanel: add a cron entry that runs every minute:
+                    <pre><code>* * * * * php /home/username/path-to-project/artisan schedule:run >> /dev/null 2>&1</code></pre>
+                </li>
+                <li>For queues on shared hosting, use the database queue driver and run a cron that executes <code>php artisan queue:work --sleep=3 --tries=3</code> or use a managed queue service.</li>
+                <li>Configure SSL via cPanel's Let's Encrypt/AutoSSL or use the provider's SSL tool.</li>
+            </ol>
+
+            <h3>VPS (Ubuntu) Installation</h3>
+            <p>Recommended for production. The example below uses Ubuntu, Nginx, PHP-FPM and MySQL.</p>
+            <ol>
+                <li>Update and install dependencies:
+                    <pre><code>sudo apt update && sudo apt upgrade -y
+sudo apt install nginx mysql-server php-fpm php-mbstring php-xml php-zip php-curl php-gd php-mysql unzip git curl -y</code></pre>
+                </li>
+                <li>Install Composer and Node.js (if needed):
+                    <pre><code>curl -sS https://getcomposer.org/installer | php
+sudo mv composer.phar /usr/local/bin/composer
+# Node (optional)
+            <h2>Routes & API</h2>
+            <p>Routes are split across <code>routes/</code> files: <code>web.php</code>, <code>api.php</code>, <code>admin.php</code>, and feature-specific route files. Typical endpoints:</p>
+                </li>
+                <li>Clone the repo and install PHP deps:
+                    <pre><code>git clone &lt;repo_url&gt;
+cd onlinebank
+composer install --no-dev --optimize-autoloader
+cp .env.example .env
+php artisan key:generate
+php artisan migrate --force
+php artisan db:seed --force
+npm install
+npm run prod</code></pre>
+                </li>
+                <li>Configure Nginx server block and point the root to <code>/path/to/onlinebank/public</code>. Example Nginx snippet:
+                    <pre><code>server {
+    listen 80;
+    server_name your-domain.com www.your-domain.com;
+    root /var/www/onlinebank/public;
+    index index.php;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php8.1-fpm.sock;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
+</code></pre>
+                </li>
+                <li>Enable the site and reload Nginx:
+                    <pre><code>sudo ln -s /etc/nginx/sites-available/onlinebank /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx</code></pre>
+                </li>
+                <li>Set permissions:
+                    <pre><code>sudo chown -R www-data:www-data /var/www/onlinebank
+sudo find /var/www/onlinebank -type f -exec chmod 644 {} \;
+sudo find /var/www/onlinebank -type d -exec chmod 755 {} \;
+sudo chgrp -R www-data storage bootstrap/cache
+sudo chmod -R ug+rwx storage bootstrap/cache</code></pre>
+                </li>
+                <li>Configure Supervisor for queue workers (install <code>supervisor</code>), example config:
+                    <pre><code>[program:onlinebank-worker]
+process_name=%(program_name)s_%(process_num)02d
+command=php /var/www/onlinebank/artisan queue:work --sleep=3 --tries=3
+user=www-data
+numprocs=1
+autostart=true
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/var/log/onlinebank-worker.log</code></pre>
+                </li>
+                <li>Enable HTTPS with Certbot/Let's Encrypt:
+                    <pre><code>sudo apt install certbot python3-certbot-nginx -y
+sudo certbot --nginx -d your-domain.com -d www.your-domain.com</code></pre>
+                </li>
+            </ol>
+        </div>
+    </section>
+
+    <section class="content" id="routes">
+        <div class="container">
+            <h2>Routes & API</h2>
+            <p>For production, ensure proper backups, monitoring, and secure credentials management (use secrets manager or environment variables). Always run migrations with <code>--force</code> in non-interactive environments.</p>
+            <ul>
+                <li><code>GET /</code> — Front page</li>
+                <li><code>GET /login</code> — Login</li>
+                <li><code>POST /transfer</code> — Initiate transfer</li>
+                <li><code>GET /admin/users</code> — Admin user list</li>
+            </ul>
+
+            <p>For more detailed API docs, extract controller method docblocks or use Laravel API resources to auto-generate OpenAPI/Swagger docs.</p>
+        </div>
+    </section>
+
+    <section class="content" id="changelog">
+        <div class="container">
+            <h2>Changelog</h2>
+            <ul>
+                <li><strong>v1.0</strong> — Initial release</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="content" id="support">
+        <div class="container">
+            <h2>Support & License</h2>
+            <p>Include support instructions and licensing. This project uses MIT (confirm in repository). For CodeCanyon submission, include support term, update policy, included files and demo links.</p>
+
+            <h3>Support</h3>
+            <p>Open an issue in the repo or contact the author at the email in the project metadata.</p>
+
+            <h3>Included Files</h3>
+            <ul>
+                <li>Complete Laravel app (app/, config/, routes/, resources/)</li>
+                <li>Documentation (this folder)</li>
+                <li>SQL dumps and seeders</li>
+            </ul>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>© OnlineBank — Documentation generated for repository. Follow CodeCanyon requirements when packaging for sale: provide clear install steps, demo links, screenshots, license, and support info.</p>
+        </div>
+    </footer>
+</main>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

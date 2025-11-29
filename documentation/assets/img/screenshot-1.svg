@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0" stop-color="#60a5fa"/>
+      <stop offset="1" stop-color="#3b82f6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="#0f172a"/>
+  <rect x="60" y="60" width="1080" height="680" rx="14" fill="url(#g)" opacity="0.95"/>
+  <g transform="translate(120,140)" fill="#fff" font-family="Arial,Helvetica,sans-serif">
+    <rect width="960" height="420" rx="8" fill="#ffffff" opacity="0.06"/>
+    <text x="20" y="40" font-size="28" font-weight="700">OnlineBank Dashboard — Placeholder</text>
+    <rect x="20" y="70" width="240" height="18" rx="4" fill="#ffffff" opacity="0.09"/>
+    <rect x="20" y="100" width="720" height="18" rx="4" fill="#ffffff" opacity="0.06"/>
+    <rect x="20" y="140" width="900" height="220" rx="6" fill="#ffffff" opacity="0.03"/>
+  </g>
+</svg>

@@ -1,0 +1,14 @@
+.wrap{max-width:980px;margin:0 auto;background:#fff;padding:20px;border-radius:8px;box-shadow:0 10px 30px rgba(2,6,23,0.08);font-family:Inter,Arial,Helvetica,sans-serif}
+body{background:#f3f4f6;color:#111;margin:0;padding:24px}
+header h1{margin:0 0 6px}
+.muted{color:#6b7280;font-size:14px}
+.installer-form label{display:block;margin:10px 0}
+.installer-form input[type=text], .installer-form input[type=password], .installer-form select, .installer-form input[type=file]{width:100%;padding:8px;border:1px solid #e5e7eb;border-radius:6px}
+.actions{margin-top:16px}
+.btn{display:inline-block;padding:8px 14px;border-radius:6px;border:1px solid #d1d5db;background:#fff}
+.btn.primary{background:#2563eb;color:#fff;border:0}
+.alert{padding:12px;border-radius:8px;margin:12px 0}
+.alert.error{background:#fee2e2;color:#7f1d1d;border:1px solid #fca5a5}
+.alert.success{background:#ecfdf5;color:#065f46;border:1px solid #bbf7d0}
+.next-steps ul{margin:0 0 10px 18px}
+footer{margin-top:18px;color:#6b7280;font-size:13px}

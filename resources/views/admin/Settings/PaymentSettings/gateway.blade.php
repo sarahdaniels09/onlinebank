@@ -83,7 +83,17 @@
             </div>
 
             <div class="form-group col-md-6">
-                <button type="submit" class="px-4 btn btn-primary">Save Settings</button>
+                @php
+                    $isLicenseInvalid = isset($licenseStatus) && $licenseStatus['status'] !== 'valid';
+                @endphp
+                <button type="submit" class="px-4 btn btn-primary" @if($isLicenseInvalid) disabled @endif>
+                    <i class="fa fa-save mr-1"></i> Save Settings
+                </button>
+                @if($isLicenseInvalid)
+                    <small class="text-danger d-block mt-2">
+                        <i class="fa fa-lock"></i> Disabled: Product license is invalid
+                    </small>
+                @endif
             </div>
         </form>
     </div>

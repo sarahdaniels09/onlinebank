@@ -407,9 +407,17 @@
                                     </div>
                                     
                                     <div class="mt-4">
-                                        <button type="submit" class="btn btn-primary btn-lg">
+                                        @php
+                                            $isLicenseInvalid = isset($licenseStatus) && $licenseStatus['status'] !== 'valid';
+                                        @endphp
+                                        <button type="submit" class="btn btn-primary btn-lg" @if($isLicenseInvalid) disabled @endif>
                                             <i class="fa fa-save mr-1"></i> Save Settings
                                         </button>
+                                        @if($isLicenseInvalid)
+                                            <div class="alert alert-warning mt-2 mb-0">
+                                                <i class="fa fa-lock"></i> Disabled: Product license is invalid
+                                            </div>
+                                        @endif
                                     </div>
                                 </form>
                             </div>
