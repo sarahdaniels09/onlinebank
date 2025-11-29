@@ -11,7 +11,13 @@ class LicenseService
     public static function getStatus()
     {
         try {
-            $path = storage_path('app/license_status.json');
+            // Use storage_path() if available (Laravel context), otherwise construct path
+            if (function_exists('storage_path')) {
+                $path = storage_path('app/license_status.json');
+            } else {
+                $path = __DIR__ . '/../../storage/app/license_status.json';
+            }
+            
             if (!file_exists($path)) {
                 return [
                     'status' => 'missing',
