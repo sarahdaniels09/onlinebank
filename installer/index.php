@@ -500,6 +500,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         steps[i].style.display='block';
         current = i;
         currentStepEl.textContent = (i+1);
+        // Sync step indicator data attribute so CSS can highlight the active bubble
+        var stepIndicatorEl = document.getElementById('stepIndicator');
+        if(stepIndicatorEl) stepIndicatorEl.setAttribute('data-current', String(i+1));
         backButton.style.display = i>0 ? 'inline-flex' : 'none';
         nextButton.style.display = i<steps.length-1 ? 'inline-flex' : 'none';
     }
